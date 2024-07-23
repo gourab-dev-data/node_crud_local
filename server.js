@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 //const logger = require('./middleware/logger');
+const errorHandler = require('./middleware/error');
 const morgan = require('morgan');
 
 const connectDB = require('./config/db');
@@ -19,6 +20,9 @@ const cruditem = require('./routes/cruds');
 
 const app = express();
 
+// Body Parser
+app.use(express.json());
+
 // Custom Middleware
 //app.use(logger);
 
@@ -30,7 +34,7 @@ if(process.env.NODE_ENV === 'development'){
 
 // Mount routers
 app.use('/api/v1/crudlist', cruditem);
-
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
