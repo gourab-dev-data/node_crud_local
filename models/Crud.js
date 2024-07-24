@@ -3,17 +3,18 @@ const mongoose = require('mongoose');
 const CrudSchema = new mongoose.Schema({
     name:{
         type: String,
-        require: [true, 'please add name'],
+        required: [true, 'please add name'],
         trim: true,
         maxlength: [50, 'Name can not be add more than 50 charecter'] 
     },
     description:{
         type: String,
-        require: [true, 'please add description'],
+        required: [true, 'please add description'],
         maxlength: [500, 'Description can not be add more than 500 charecter']
     },
     email:{
         type: String,
+        required: [true, 'please add description'],
         unique: true,
         match: [
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
