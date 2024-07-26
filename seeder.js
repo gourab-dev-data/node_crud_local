@@ -6,17 +6,17 @@ const dotenv = require('dotenv');
 dotenv.config({ path: './config/config.env' });
 
 // Load Models
-const Crud = require('./models/Crud');
+const Bootcamp = require('./models/Bootcamp');
 
 // Connect DB
 mongoose.connect(process.env.MONGO_URI).then( () => console.log('Database connected')).catch( (err) => console.log('Database connection', err));
 
-const crud = JSON.parse(fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8'));
+const bootcamp = JSON.parse(fs.readFileSync(`${__dirname}/_data/bootcamps.json`, 'utf-8'));
 
 // Importe data
 const importData = async () => {
     try {
-        await Crud.create(crud);
+        await Bootcamp.create(bootcamp);
         console.log('Data imported..');
         process.exit();
     }catch(err){

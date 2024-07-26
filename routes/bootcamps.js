@@ -1,11 +1,11 @@
 const express = require('express');
 
-const { getCruds, getCrud, createCrud, updateCrud, deleteCrud } = require('../controllers/cruds');
+const { getBootcamps, getBootcamp, createBootcamp, updateBootcamp, deleteBootcamp } = require('../controllers/bootcamps');
 
 routes = express.Router();
 
-routes.route('/').get(getCruds).post(createCrud);
-routes.route('/:id').get(getCrud).put(updateCrud).delete(deleteCrud);
+routes.route('/').get(getBootcamps).post(createBootcamp);
+routes.route('/:id').get(getBootcamp).put(updateBootcamp).delete(deleteBootcamp);
 
 // routes.get('/', (req, res) => {
 //     res.status(200).json({ success: true, msg: "Show all crudlist" });

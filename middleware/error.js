@@ -1,7 +1,7 @@
 const ErrorResponse = require('../utils/errorResponse');
 
 const errorHandler = (err, req, res, next) => {
-    console.log(err);
+    //console.log(err);
     //
     let error = {...err};
 
@@ -9,7 +9,7 @@ const errorHandler = (err, req, res, next) => {
 
     // Mongosse bad request
     if(err.name === 'CastError'){
-        const message = `Crudlist not find this id ${err.value}`;
+        const message = `Bootcamps not find this id ${err.value}`;
         error = new ErrorResponse(message, 404);
     }
     // Mongosse validation error
