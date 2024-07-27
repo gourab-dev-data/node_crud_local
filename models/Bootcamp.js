@@ -71,7 +71,7 @@ const BootcampSchema = new mongoose.Schema({
         min: [1, "Min rating"],
         max: [10, 'max rating']
     },
-    averageRating: Number,
+    averageCost: Number,
     photo:{
         type: String,
         default: 'no-image.jpg'
