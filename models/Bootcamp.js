@@ -27,7 +27,7 @@ const BootcampSchema = new mongoose.Schema({
     },    
     email:{
         type: String,
-        required: [true, 'please add description'],
+        required: [true, 'please add email'],
         unique: true,
         match: [
             /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
