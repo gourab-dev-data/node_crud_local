@@ -27,6 +27,13 @@ exports.getBootcamp = asyncHandler( async (req, res, next) => {
 //@access   Privet
 exports.createBootcamp = asyncHandler( async (req, res, next) => {
     //console.log(req.body);
+    console.log(req.user.id);
+
+    req.body.user = req.user.id;
+    const publishedBootcamp = await Bootcamp.findOne({ user: req.user.id });
+    if(publishedBootcamp && req.user.role !== 'admin'){
+        return next( new ErrorResponse(`This user with id ${req.user.id} has already published on bootcamp`), 400);
+    }
     const bootcamp = await Bootcamp.create(req.body);
     res.status(201).json({ success: true, data: bootcamp });
 });
@@ -35,13 +42,17 @@ exports.createBootcamp = asyncHandler( async (req, res, next) => {
 //@routes   PUT /api/v1/bootcamps/:id
 //@access   Privet
 exports.updateBootcamp = asyncHandler( async (req, res, next) => {
-    const bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
-        new: true,
-        runValidators: true
-    });
+    let bootcamp = await Bootcamp.findById(req.params.id);
     if(!bootcamp){
         return next(err);
     }
+    if(bootcamp.user.toString() !== req.user.id && req.user.role !== 'admin'){
+        return next( new ErrorResponse(`User ${req.user.id} not authorized`));
+    }
+    bootcamp = await Bootcamp.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true
+    });
     res.status(200).json({ success: true, data: bootcamp });
 });
 

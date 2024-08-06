@@ -5,7 +5,7 @@ const { getBootcamps, getBootcamp, createBootcamp, updateBootcamp, deleteBootcam
 const Bootcamp = require('../models/Bootcamp');
 const advancedResult = require('../middleware/advancedResult');
 
-const { protect } = require('../middleware/auth');
+const { protect, authorize } = require('../middleware/auth');
 
 // Include other resource routers
 const courseRouter = require('./courses');
@@ -16,9 +16,9 @@ routes = express.Router();
 // Re-route into other resources routers
 routes.use('/:bootcampId/courses', courseRouter);
 
-routes.route('/').get(advancedResult(Bootcamp, 'courses'), getBootcamps).post(protect, createBootcamp);
-routes.route('/:id').get(getBootcamp).put(protect, updateBootcamp).delete(protect, deleteBootcamp);
-routes.route('/:id/photo').put(protect, uploadPhotoBootcamp);
+routes.route('/').get(advancedResult(Bootcamp, 'courses'), getBootcamps).post(protect, authorize('admin', 'publisher'), createBootcamp);
+routes.route('/:id').get(getBootcamp).put(protect, authorize('admin','publisher'), updateBootcamp).delete(protect, authorize('admin','publisher'), deleteBootcamp);
+routes.route('/:id/photo').put(protect, authorize('admin','publisher'), uploadPhotoBootcamp);
 
 // routes.get('/', (req, res) => {
 //     res.status(200).json({ success: true, msg: "Show all crudlist" });
